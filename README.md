@@ -14,6 +14,7 @@ For detailed explanation of the SSP scenarios, visit the [German Climate Computi
 You can manually browse or download the original data from the AWS S3 portal:  
 📎 [https://nex-gddp-cmip6.s3.us-west-2.amazonaws.com/index.html](https://nex-gddp-cmip6.s3.us-west-2.amazonaws.com/index.html)
 
+To re-download the raw data, use the provided `.bat` script and modify the scenario name and variables as needed.
 
 ## 2. Downloaded Parameters
 
@@ -27,7 +28,7 @@ We downloaded daily climate variables from 2015 to 2100, and the spatial resolut
 
 > ⚠️ Note: Not all GCMs include all variables. Some may lack `tasmax`, `tasmin`, or `prec`.
 
-The grid-level raw data has been deleted. To re-download the raw data, use the provided `.bat` script and modify the scenario name and variables as needed. (we are planing to redownloading and store all the raw data.)
+The grid-level raw data has been deleted.  We are planing to redownloading and store all the raw data, you will find it in McCarl group NAS。
 
 ## 3. Data Cleaning Process
 
