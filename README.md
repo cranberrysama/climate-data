@@ -49,7 +49,7 @@ We derived the following variables from daily data:
 - 59 Temperature bins (–12°C to 46°C)
 - 2 Precipitation intensity  (90th and 95th percentiles)
 
-> ⚠️ Occasionally, projected `tasmax < tasmin` leads to bin calculation errors.  
+> ⚠️ Rare cases of `tasmax < tasmin` in GCM data may cause minor bin errors, but are negligible.
 
 
 ### • Crop-Specific Growing Season Aggregation
