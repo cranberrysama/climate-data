@@ -1,0 +1,13 @@
+# How to Download CMIP6 Data
+
+1. **Install AWS CLI**  
+   Download the installer from: [https://awscli.amazonaws.com/AWSCLIV2.msi](https://awscli.amazonaws.com/AWSCLIV2.msi)  
+   After installation, open a Command Prompt (cmd) and run `aws --version` to verify the installation.
+
+2. **Edit the Batch File**  
+   - Remove any model/SSP paths you don’t need.  
+   - Update `BASE_PATH` to the local folder where you want to store the downloaded data.
+
+3. **Run the Batch File**  
+   Double-click the `.bat` file or run it in the Command Prompt.  
+   Files will be downloaded automatically into your specified folder.
