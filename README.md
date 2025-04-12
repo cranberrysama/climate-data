@@ -14,7 +14,7 @@ For detailed explanation of the SSP scenarios, visit the [German Climate Computi
 You can manually browse or download the original data from the AWS S3 portal:  
 📎 [https://nex-gddp-cmip6.s3.us-west-2.amazonaws.com/index.html](https://nex-gddp-cmip6.s3.us-west-2.amazonaws.com/index.html)
 
-To re-download the raw data, use the provided `.bat` script and modify the scenario name and variables as needed.
+See Readme_download_rawdata about how to download grid-level rawdata.
 
 ## 2. Downloaded Parameters
 
