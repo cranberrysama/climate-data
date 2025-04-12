@@ -28,11 +28,61 @@ We downloaded daily climate variables from 2015 to 2100, and the spatial resolut
 
 > ⚠️ Note: Not all GCMs include all variables. Some may lack `tasmax`, `tasmin`, or `prec`.
 
-The grid-level raw data has been deleted.  We are planing to redownloading and store all the raw data, you will find it in McCarl group NAS。
+The grid-level raw data has been deleted.  We are planing to redownloading and store all the raw data, you will find it in McCarl group NAS `10.118.30.41/CMIP6`。
 
 ## 3. Data Cleaning Process
 
 ### • Spatial Aggregation
 
-We aggregated grid-level data to **county-level** averages using agricultural land area as weights. The final dataset has the format:
+We aggregated grid-level CMIP6 data to **county-level** averages using agricultural land area as weights. The processed data is stored in our NAS (`10.118.30.41`) in NetCDF format, with one file per 5-year period.
+
+> 📂 If you wish to perform spatial aggregation for other regions (e.g., countries, custom zones), refer the script `weights_example.py`.  
+> This script computes the share of each CMIP6 grid cell that overlaps with your target regions, based on a provided shapefile.  
+> 🔎 **Make sure** the shapefile and CMIP6 grid resolution are aligned and properly buffered to capture all overlapping areas.
+
+### • Additional Variables
+
+We derived the following variables from daily data:
+
+- 55 Degree Day bins (–12°C to 42°C)
+- 45 Freezing Degree Day bins (–20°C to 25°C)
+- 59 Temperature bins (–12°C to 46°C)
+- 2 Precipitation intensity  (90th and 95th percentiles)
+
+> ⚠️ Occasionally, projected `tasmax < tasmin` leads to bin calculation errors.  
+
+
+### • Crop-Specific Growing Season Aggregation
+
+We created yearly **growing season summaries** based on crop and state-specific growing dates 
+
+> 🌱 Growing season information is available in ` Modified_GrowingSeason_bystate2.csv`.
+> Note: In the growing season aggregation, precipitation rate was converted from **kg/m²/s** to **kg/m²/day**.
+> We also computed average growing season data for two future periods: **2045–2055** and **2085–2095**.  
+> These datasets are available at:  
+> `NAS\Climate data\CMIP6\US\growing_season_data\2050`  
+> `NAS\Climate data\CMIP6\US\growing_season_data\2090`
+
+
+### • Monthly / Quarterly / Yearly Aggregation for Livestock
+
+
+This upcoming dataset (in progress) will include:
+
+- **Temperature-Humidity Index** (`THI_max`, `THI_min`)
+- **THI Bins**
+- **Relative Humidity** (`RH_max`, `RH_min`)
+- **RH Bins**
+
+The data is prepared for **state-level livestock analysis**, covering major categories such as **cattle, hogs, layers, and broilers ...**.
+
+> Climate variables are aggregated at the state level using county-level livestock populations as weights.
+
+
+
+---
+
+## Contact
+
+If you need access to this dataset or need help adapting the preprocessing code, feel free to contact mengqiaoliu@tamu.edu.
 
