@@ -16,6 +16,8 @@ You can manually browse or download the original data from the AWS S3 portal:
 
 See Readme_download_rawdata about how to download grid-level rawdata.
 
+You can find the list of all projected GCMs and scenarios in the file 'scenarios_table.xlsx'
+
 ## 2. Downloaded Parameters
 
 We downloaded daily climate variables from 2015 to 2100, and the spatial resolution of the grid-level raw data is 0.25 degrees x0.25 degrees:
@@ -36,9 +38,9 @@ The grid-level raw data has been deleted.  We are planing to redownloading and s
 
 We aggregated grid-level CMIP6 data to **county-level** averages using agricultural land area as weights. The processed data is stored in our NAS (`10.118.30.41`) in NetCDF format, with one file per 5-year period.
 
-> 📂 If you wish to perform spatial aggregation for other regions (e.g., countries, custom zones), refer the script `weights_example.py`.  
+> If you wish to perform spatial aggregation for other regions (e.g., countries, custom zones), refer the script `weights_example.py`.  
 > This script computes the share of each CMIP6 grid cell that overlaps with your target regions, based on a provided shapefile.  
-> 🔎 **Make sure** the shapefile and CMIP6 grid resolution are aligned and properly buffered to capture all overlapping areas.
+>  **Make sure** the shapefile and CMIP6 grid resolution are aligned and properly buffered to capture all overlapping areas.
 
 ### • Additional Variables
 
