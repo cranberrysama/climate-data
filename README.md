@@ -46,10 +46,10 @@ We aggregated grid-level CMIP6 data to **county-level** averages using agricultu
 
 We derived the following variables from daily data:
 
-- 55 Degree Day bins (–12°C to 42°C)
-- 45 Freezing Degree Day bins (–20°C to 25°C)
-- 59 Temperature bins (–12°C to 46°C)
-- 2 Precipitation intensity  (90th and 95th percentiles)
+- 55 `Degree Days` (–12°C to 42°C)
+- 45 `Freezing Degree Days` (–20°C to 25°C)
+- 59 `Degree Days bins` (–12°C to 46°C)
+- 2 `Precipitation intensity`  (90th and 95th percentiles)
 
 > ⚠️ Rare cases of `tasmax < tasmin` in GCM data may cause minor bin errors, but are negligible.
 
