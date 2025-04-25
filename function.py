@@ -119,3 +119,102 @@ def getbins(data, nT):
         savebin[Tvect.name] = Tvect
     return (savebin)
 
+def RH(temp, mdpt):
+    num = np.exp((17.625 * mdpt) / (243.04 + mdpt))
+    den = np.exp((17.625 * temp) / (243.04 + temp))
+    return num / den
+
+# function of THI
+def THI(rh, temp):
+    THI = 0.8*temp + rh*(temp - 14.4) + 46.4
+    return THI
+
+def DaysinRange_rh(t0, t1, data):
+    tMin = data.rhmin.reset_index(drop=True)
+    tMax = data.rhmax.reset_index(drop=True)
+    n = len(tMin)
+
+    # Initialize a DataFrame with tMin and tMax values equal to t0 and t1
+    tnew = pd.DataFrame({'tMin': [t0] * n, 'tMax': [t1] * n})
+
+    # Adjust tMin where it's smaller than tasmin
+    tnew.loc[tnew.tMin < tMin, 'tMin'] = tMin[tnew.tMin < tMin]
+
+    # Adjust tMax where it's larger than tasmax, ensuring conversion to float if necessary
+    tMax_filtered = tMax[tnew.tMax > tMax].astype(float)
+    tnew.loc[tnew.tMax > tMax, 'tMax'] = tMax_filtered
+
+    # Define outside and inside conditions
+    outside = (tnew.tMin > tMax) | (tnew.tMax < tMin)
+    inside = ~outside  # The inverse condition of outside
+
+    # Compute the TimeatRange
+    TimeatRange = (2 / math.pi) * (
+            u(tnew.tMax, inside, tMin, tMax).apply(math.asin) -
+            u(tnew.tMin, inside, tMin, tMax).apply(math.asin)
+    )
+
+    # Create a result array with NaN values by default, same size as the data
+    x = pd.Series(index=data.index, dtype=float)
+
+    # Assign the computed TimeatRange values where 'inside' is True, others remain NaN
+    x[inside] = TimeatRange
+
+    # Rename the series to reflect the mid-point of the range
+    x.name = f"rh_BIN_{t0 + 0.02}"
+    return x
+
+def DaysinRange_thi(thi0, thi1, data):
+        thimin = data.thimin.reset_index(drop=True)
+        thimax = data.thimax.reset_index(drop=True)
+        n = len(thimin)
+
+        # Initialize a DataFrame with thimin and thimax values equal to thi0 and thi1
+        thinew = pd.DataFrame({'thimin': [thi0] * n, 'thimax': [thi1] * n})
+
+        # Adjust thimin where it's smaller than calculated thimin
+        thinew.loc[thinew.thimin < thimin, 'thimin'] = thimin[thinew.thimin < thimin]
+
+        # Adjust thimax where it's larger than calculated thimax
+        thimax_filtered = thimax[thinew.thimax > thimax].astype(float)
+        thinew.loc[thinew.thimax > thimax, 'thimax'] = thimax_filtered
+
+        # Define outside and inside conditions
+        outside = (thinew.thimin > thimax) | (thinew.thimax < thimin)
+        inside = ~outside  # The inverse condition of outside
+
+        # Compute the TimeatRange using scaled and shifted arcsin transformation
+        TimeatRange = (2 / math.pi) * (
+                u(thinew.thimax, inside, thimin, thimax).apply(math.asin) -
+                u(thinew.thimin, inside, thimin, thimax).apply(math.asin)
+        )
+
+        # Create a result array with NaN values by default, same size as the data
+        x = pd.Series(index=data.index, dtype=float)
+
+        # Assign the computed TimeatRange values where 'inside' is True, others remain NaN
+        x[inside] = TimeatRange
+
+        # Rename the series to reflect the mid-point of the range
+        x.name = f"thi_BIN_{thi0 + 0.5}"
+
+        return x
+
+
+
+
+def getbins_thi(data, bound_THI):
+    savebin = pd.DataFrame()
+    for k in bound_THI:
+        print(k)
+        Tvect = DaysinRange_thi(k - 0.5, k + 0.5, data)
+        savebin[Tvect.name] = Tvect
+    return (savebin)
+
+def getbins_rh(data, nT):
+    savebin = pd.DataFrame()
+    for k in nT:
+        print(k)
+        Tvect = DaysinRange_rh(k - 0.02, k + 0.02, data)
+        savebin[Tvect.name] = Tvect
+    return (savebin)
